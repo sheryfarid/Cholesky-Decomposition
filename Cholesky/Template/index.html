@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cholesky Decomposition Solver</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .result, .error {
+            margin-top: 20px;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Cholesky Decomposition Solver</h1>
+        <form method="post" class="mt-4">
+            <div class="form-group">
+                <label for="rows">Number of rows/columns for the square matrix A:</label>
+                <input type="number" class="form-control" id="rows" name="rows" required>
+            </div>
+            <div class="form-group">
+                <label for="matrix">Matrix A (enter row-wise, space-separated):</label>
+                <textarea class="form-control" id="matrix" name="matrix" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="vector">Vector B (space-separated):</label>
+                <textarea class="form-control" id="vector" name="vector" rows="2" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Solve</button>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h2 class="text-center">Results</h2>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <p><strong>Largest eigenvalue of A (should be positive):</strong> {{ result.largest_eigenvalue }}</p>
+                        <p><strong>Matrix A - λI for the largest eigenvalue λ:</strong></p>
+                        <pre>{{ result.A_lambda_I }}</pre>
+                        <p><strong>Matrix A:</strong></p>
+                        <pre>{{ result.A }}</pre>
+                        <p><strong>Vector B:</strong></p>
+                        <pre>{{ result.B }}</pre>
+                        <p><strong>Lower triangular matrix L:</strong></p>
+                        <pre>{{ result.L }}</pre>
+                        <p><strong>Upper triangular matrix L<sup>T</sup>:</strong></p>
+                        <pre>{{ result.LT }}</pre>
+                        <p><strong>Solution Y (LY = B):</strong></p>
+                        <pre>{{ result.Y }}</pre>
+                        <p><strong>Solution X (L<sup>T</sup>X = Y, AX = B):</strong></p>
+                        <pre>{{ result.X }}</pre>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error alert alert-danger mt-4">
+                <h2 class="alert-heading">Error</h2>
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
